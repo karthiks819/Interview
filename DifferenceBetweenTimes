@@ -1,0 +1,21 @@
+func test(str: String) -> Int {
+    let seperatedStrs = str.components(separatedBy: "-")
+    guard let start = seperatedStrs.first else {  return 0}
+    guard let end = seperatedStrs.last else{ return 0}
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    dateFormatter.dateFormat = "hh:mma"
+
+    if let startDate = dateFormatter.date(from: start),
+        let endDate = dateFormatter.date(from: end) {
+        let hours = Calendar.current.dateComponents([.minute], from: startDate, to: endDate < startDate ? Calendar.current.date(byAdding: .day, value: 1, to: endDate) ?? endDate : endDate).minute ?? 0
+        print(hours)
+        return hours
+    }
+    return 0
+}
+
+test(str: "1:00pm-2:00pm")
+
+//to print difference between the times
